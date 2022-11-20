@@ -1,0 +1,40 @@
+From 58d86525eece3d7a200af01793fd2ef17fdea0f6 Mon Sep 17 00:00:00 2001
+From: "Rodrigo Q. Saramago" <rodrigoqsaramago@gmail.com>
+Date: Sun, 20 Nov 2022 15:07:40 +0100
+Subject: [PATCH] Remove importScripts
+
+---
+ worker.js | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/worker.js b/worker.js
+index 20a6cb7..ddf856e 100644
+--- a/worker.js
++++ b/worker.js
+@@ -1,7 +1,11 @@
+-importScripts('https://binaries.soliditylang.org/bin/soljson-v0.8.4+commit.c7e474f2.js')
+ import wrapper from 'solc/wrapper';
+ 
+-self.addEventListener('message', (e) => {
++async function fetchSolc() {
++    const response = await fetch('https://binaries.soliditylang.org/bin/soljson-v0.8.4+commit.c7e474f2.js');
++    return await response.text()
++}
++
++self.addEventListener('message', async (e) => {
+ 	const contractCode = e.data.contractCode
+ 	const sourceCode = {
+ 		language: 'Solidity',
+@@ -19,7 +23,8 @@ self.addEventListener('message', (e) => {
+ 		}
+ 	};
+ 
+-	const compiler = wrapper(self.Module)
++    const soljson = await fetchSolc()
++    const compiler = wrapper(eval(soljson + "; Module"))
+     console.log(compiler.version())
+ 
+ 	self.postMessage({
+-- 
+2.38.1
+
