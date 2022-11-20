@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <script>
+        var worker = new Worker('./dist/bundle.js');
+        worker.addEventListener('message', function (e) {
+            const output = e.data.output
+            for (var contractName in output.contracts['contract']) {
+                console.log(`Bytecode of contract: ${contractName}: ${output.contracts['contract'][contractName].evm.bytecode.object}`);
+            }
+        }, false);
+
+        worker.postMessage({
+            contractCode: 'contract C { function f() public { } }',
+        })
+    </script>
+</body>
+
+</html>
