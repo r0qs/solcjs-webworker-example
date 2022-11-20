@@ -12,3 +12,6 @@ If you want to fetch the `solcjson.js` without using the [importScripts](https:/
 
 To apply the patch do:
 `git am eval.patch`
+
+
+**WARNING**: Please be aware of the [consequences when using eval](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval#never_use_eval!).
