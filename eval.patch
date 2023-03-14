@@ -1,6 +1,6 @@
-From 58d86525eece3d7a200af01793fd2ef17fdea0f6 Mon Sep 17 00:00:00 2001
+From 70457492887b1cbb4c663e07b7a8b20ea898547e Mon Sep 17 00:00:00 2001
 From: "Rodrigo Q. Saramago" <rodrigoqsaramago@gmail.com>
-Date: Sun, 20 Nov 2022 15:07:40 +0100
+Date: Tue, 14 Mar 2023 14:54:45 +0100
 Subject: [PATCH] Remove importScripts
 
 ---
@@ -8,33 +8,33 @@ Subject: [PATCH] Remove importScripts
  1 file changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/worker.js b/worker.js
-index 20a6cb7..ddf856e 100644
+index c8c3ccb..029fd4e 100644
 --- a/worker.js
 +++ b/worker.js
 @@ -1,7 +1,11 @@
--importScripts('https://binaries.soliditylang.org/bin/soljson-v0.8.4+commit.c7e474f2.js')
+-importScripts('https://binaries.soliditylang.org/bin/soljson-v0.8.19+commit.7dd6d404.js')
  import wrapper from 'solc/wrapper';
  
 -self.addEventListener('message', (e) => {
 +async function fetchSolc() {
-+    const response = await fetch('https://binaries.soliditylang.org/bin/soljson-v0.8.4+commit.c7e474f2.js');
++    const response = await fetch('https://binaries.soliditylang.org/bin/soljson-v0.8.19+commit.7dd6d404.js');
 +    return await response.text()
 +}
 +
 +self.addEventListener('message', async (e) => {
- 	const contractCode = e.data.contractCode
- 	const sourceCode = {
- 		language: 'Solidity',
+     const contractCode = e.data.contractCode
+     const sourceCode = {
+         language: 'Solidity',
 @@ -19,7 +23,8 @@ self.addEventListener('message', (e) => {
- 		}
- 	};
+         }
+     };
  
--	const compiler = wrapper(self.Module)
+-    const compiler = wrapper(self.Module)
 +    const soljson = await fetchSolc()
 +    const compiler = wrapper(eval(soljson + "; Module"))
-     console.log(compiler.version())
+     console.log(`Solc version: ${compiler.version()}`)
  
- 	self.postMessage({
+     self.postMessage({
 -- 
-2.38.1
+2.39.2
 
