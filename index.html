@@ -11,7 +11,7 @@
         worker.addEventListener('message', function (e) {
             const output = e.data.output
             for (var contractName in output.contracts['contract']) {
-                console.log(`Bytecode of contract: ${contractName}: ${output.contracts['contract'][contractName].evm.bytecode.object}`);
+                console.log(`Bytecode of contract ${contractName}: ${output.contracts['contract'][contractName].evm.bytecode.object}`);
             }
         }, false);
 

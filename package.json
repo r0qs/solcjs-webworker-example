@@ -1,5 +1,5 @@
 {
-  "name": "solcjs-worker",
+  "name": "solcjs-webworker-example",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,10 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
+  "license": "GPL-3.0",
   "dependencies": {
     "browserify": "^17.0.0",
-    "solc": "^0.8.17"
+    "solc": "^0.8.19"
   },
   "devDependencies": {
     "@babel/core": "^7.19.0",
