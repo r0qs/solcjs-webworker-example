@@ -16,9 +16,16 @@ npx browserify -t babelify ./worker.js > ./dist/bundle.js
 
 ## Test
 
-Run the command below which will open your browser. We are using chromium in this example:
+You need to serve the `bundle.js` and `index.html` files.
+You can do it by starting a simple python webserver at `127.0.0.1` on port `8000` with the command below:
+
 ```
-chromium --allow-file-access-from-files index.html
+python -m http.server --bind 127.0.0.1
+```
+
+Then run the command below to open your browser in the designed host and port. We are using chromium in this example:
+```
+chromium 127.0.0.1:8000
 ```
 
 Open your [browser's developer tools window](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/Tools_and_setup/What_are_browser_developer_tools). You should see the following output under the `console` tab:
